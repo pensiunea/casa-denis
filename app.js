@@ -368,5 +368,18 @@ Multumesc!`;
         if (!inside) cal.hidden = true;
       }
     });
+      // back to top button
+  const topBtn = document.querySelector("[data-top]");
+  if (topBtn) {
+    const toggleTop = () => {
+      topBtn.hidden = window.scrollY < 700;
+    };
+    toggleTop();
+    window.addEventListener("scroll", toggleTop, { passive: true });
+
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
   })();
 })();
