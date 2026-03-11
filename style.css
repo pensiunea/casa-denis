@@ -242,3 +242,20 @@ a{color:inherit;text-decoration:none}
 @media (max-width: 900px){
   body{ background-attachment: scroll; }
 }
+.hero-more{margin-top:10px}
+.linkbtn{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:rgba(231,234,240,.85);
+  font-weight:800;
+  padding:0;
+  cursor:pointer;
+  text-decoration:underline;
+  text-decoration-color:rgba(231,234,240,.28);
+  text-underline-offset:4px;
+}
+.linkbtn:hover{color:rgba(255,255,255,.95)}
+.collapse{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.collapse.open{max-height:260px} /* suficient pentru textul tau */
+.hero-sub.full{margin:10px 0 0; max-width:760px}
