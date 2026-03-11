@@ -94,4 +94,17 @@
       if (e.key === "ArrowRight") step(1);
     });
   }
+    // read more toggles
+  document.querySelectorAll("[data-toggle]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const sel = btn.getAttribute("data-toggle");
+      const panel = sel ? document.querySelector(sel) : null;
+      if (!panel) return;
+
+      const isOpen = panel.classList.toggle("open");
+      btn.setAttribute("aria-expanded", String(isOpen));
+      panel.setAttribute("aria-hidden", String(!isOpen));
+      btn.textContent = isOpen ? "Citeste mai putin" : "Citeste mai mult";
+    });
+  });
 })();
