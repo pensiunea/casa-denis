@@ -249,24 +249,81 @@
           </div>
 
           <div class="card note">
-            <h3>Mesaj rapid (copy/paste)</h3>
-            <p class="muted">Trimite pe WhatsApp și scurtezi discuția.</p>
-            <div class="copybox">
-              <code id="msg">
-Salut! Aș dori o rezervare la Casa Denis.
-Perioadă: [data]
-Număr persoane: [x]
-Preferințe: [pat / mic dejun]
-Mulțumesc!
-              </code>
-              <button class="btn btn-ghost small" data-copy="#msg">Copiază</button>
-            </div>
+  <h3>Rezervare rapidă</h3>
+  <p class="muted">Alegi perioada, camera și numărul de persoane, apoi trimiți direct pe WhatsApp.</p>
 
-            <div class="fineprint">
-              Dacă ai și profilul Google Business, pune link-ul site-ului acolo. Crește încrederea și ajută la conversie.
-            </div>
-          </div>
-        </div>
+  <div class="booking">
+    <div class="booking-grid">
+      <div class="field">
+        <label for="bkRoom">Tip cameră</label>
+        <select id="bkRoom">
+          <option value="Camera dubla (baie proprie)">Camera dubla (baie proprie)</option>
+          <option value="Camera tripla (baie proprie)">Camera tripla (baie proprie)</option>
+          <option value="Camera (baie la comun)">Camera (baie la comun)</option>
+          <option value="Orice varianta disponibila">Orice varianta disponibila</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="bkGuests">Persoane</label>
+        <select id="bkGuests">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="dates">
+      <div class="field">
+        <label>Check-in</label>
+        <button type="button" class="datebtn" data-open="in">
+          <span id="bkInText">Alege data</span>
+        </button>
+      </div>
+
+      <div class="field">
+        <label>Check-out</label>
+        <button type="button" class="datebtn" data-open="out" disabled>
+          <span id="bkOutText">Alege data</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="calendar card" id="bkCal" aria-label="Calendar" hidden>
+      <div class="cal-head">
+        <button type="button" class="cal-nav" data-cal-prev aria-label="Luna anterioara">‹</button>
+        <div class="cal-title" id="calTitle">—</div>
+        <button type="button" class="cal-nav" data-cal-next aria-label="Luna urmatoare">›</button>
+      </div>
+
+      <div class="cal-dow">
+        <div>Lu</div><div>Ma</div><div>Mi</div><div>Jo</div><div>Vi</div><div>Sa</div><div>Du</div>
+      </div>
+
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-hint" id="calHint">Selecteaza data de check-in.</div>
+    </div>
+
+    <div class="booking-actions">
+      <a class="btn btn-primary" id="bkWhatsApp" target="_blank" rel="noopener" href="#">
+        Trimite pe WhatsApp
+      </a>
+      <button class="btn btn-ghost" type="button" id="bkCopy">Copiaza mesajul</button>
+    </div>
+
+    <div class="copybox">
+      <code id="bkMsgPreview">Completeaza detaliile de mai sus.</code>
+    </div>
+
+    <div class="fineprint">
+      Daca nu ai inca poze pentru camere, nu e problemă. Important e mesajul complet si rapid.
+    </div>
+  </div>
+</div>
 
         <footer class="footer">
           <div>© <span id="y"></span> Casa Denis</div>
