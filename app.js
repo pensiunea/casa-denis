@@ -21,7 +21,7 @@
     });
   }
 
-  // copy button
+  // copy button (generic)
   document.querySelectorAll("[data-copy]").forEach(btn => {
     btn.addEventListener("click", async () => {
       const sel = btn.getAttribute("data-copy");
@@ -94,7 +94,8 @@
       if (e.key === "ArrowRight") step(1);
     });
   }
-    // read more toggles
+
+  // read more toggles
   document.querySelectorAll("[data-toggle]").forEach(btn => {
     btn.addEventListener("click", () => {
       const sel = btn.getAttribute("data-toggle");
@@ -107,7 +108,8 @@
       btn.textContent = isOpen ? "Citeste mai putin" : "Citeste mai mult";
     });
   });
-    // booking widget (date range + WhatsApp message)
+
+  // booking widget (date range + WhatsApp message)
   (function initBooking(){
     const cal = document.getElementById("bkCal");
     const calTitle = document.getElementById("calTitle");
@@ -119,7 +121,10 @@
     const inText = document.getElementById("bkInText");
     const outText = document.getElementById("bkOutText");
 
-    const roomSel = document.getElementById("bkRoom");
+    // NEW: room counts
+    const matSel = document.getElementById("bkMat");   // 0..3
+    const twinSel = document.getElementById("bkTwin"); // 0..2
+
     const guestsSel = document.getElementById("bkGuests");
 
     const waBtn = document.getElementById("bkWhatsApp");
@@ -131,9 +136,7 @@
 
     if (!cal || !calGrid || !inBtn || !outBtn || !waBtn || !preview) return;
 
-    // Extract WhatsApp number from existing placeholders if present in DOM
-    // We expect your page already has https://wa.me/[WHATSAPP] in other places.
-    // Fallback: you can hardcode here: const WHATSAPP = "4073....";
+    // Extract WhatsApp number from existing links (expects https://wa.me/407...)
     let WHATSAPP = "";
     const anyWaLink = document.querySelector('a[href^="https://wa.me/"]');
     if (anyWaLink) {
@@ -156,17 +159,62 @@
     let viewY = today.getFullYear();
     let viewM = today.getMonth();
 
+    const updateGuestsOptions = () => {
+      const mat = matSel ? parseInt(matSel.value, 10) : 0;
+      const twin = twinSel ? parseInt(twinSel.value, 10) : 0;
+
+      const roomsTotal = mat + twin;
+      const maxGuests = roomsTotal * 2; // 2 persoane/camera
+
+      if (!guestsSel) return;
+
+      const prev = guestsSel.value;
+      guestsSel.innerHTML = "";
+
+      if (maxGuests === 0) {
+        const opt = document.createElement("option");
+        opt.value = "0";
+        opt.textContent = "Selecteaza camerele";
+        guestsSel.appendChild(opt);
+        guestsSel.value = "0";
+        guestsSel.disabled = true;
+        return;
+      }
+
+      guestsSel.disabled = false;
+
+      for (let i = 1; i <= maxGuests; i++) {
+        const opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = String(i);
+        guestsSel.appendChild(opt);
+      }
+
+      const prevNum = parseInt(prev, 10);
+      if (!isNaN(prevNum) && prevNum >= 1 && prevNum <= maxGuests) {
+        guestsSel.value = String(prevNum);
+      } else {
+        guestsSel.value = String(maxGuests);
+      }
+    };
+
     const buildMessage = () => {
-      const picked = Array.from(document.querySelectorAll("#bkRooms input:checked")).map(x => x.value);
-      const room = picked.length ? picked.join(", ") : "—";
-      const guests = guestsSel?.value || "—";
+      const mat = matSel ? parseInt(matSel.value, 10) : 0;
+      const twin = twinSel ? parseInt(twinSel.value, 10) : 0;
+
+      const roomsParts = [];
+      if (mat > 0) roomsParts.push(`${mat} x camera matrimoniala (baie proprie)`);
+      if (twin > 0) roomsParts.push(`${twin} x camera twin (baie la comun)`);
+      const roomsText = roomsParts.length ? roomsParts.join(", ") : "—";
+
+      const guests = guestsSel && !guestsSel.disabled ? (guestsSel.value || "—") : "—";
       const inStr = checkIn ? fmt(checkIn) : "—";
       const outStr = checkOut ? fmt(checkOut) : "—";
 
       const msg =
 `Salut! As dori o rezervare la Casa Denis.
 Perioada: ${inStr} - ${outStr}
-Tip camera: ${room}
+Camere: ${roomsText}
 Persoane: ${guests}
 Multumesc!`;
 
@@ -178,7 +226,10 @@ Multumesc!`;
       } else {
         waBtn.href = "#";
       }
-      waBtn.classList.toggle("disabled", !checkIn || !checkOut || !WHATSAPP);
+
+      const hasRooms = (mat + twin) > 0;
+      const hasDates = !!(checkIn && checkOut);
+      waBtn.classList.toggle("disabled", !hasDates || !WHATSAPP || !hasRooms);
     };
 
     const render = () => {
@@ -211,7 +262,7 @@ Multumesc!`;
         btn.className = "day";
         btn.textContent = String(day);
 
-        // disable past dates for check-in selection (you can remove this if you want)
+        // disable past dates for check-in selection
         if (d < today && openMode === "in") {
           btn.classList.add("muted");
           btn.disabled = true;
@@ -241,11 +292,9 @@ Multumesc!`;
             return;
           }
 
-          // out mode
           if (!checkIn) return;
 
           if (d <= checkIn) {
-            // if user selects same/earlier, treat as new check-in
             checkIn = d;
             checkOut = null;
             inText.textContent = fmt(checkIn);
@@ -262,7 +311,6 @@ Multumesc!`;
           render();
           buildMessage();
 
-          // auto-hide calendar after selecting checkout (optional)
           cal.hidden = true;
         });
 
@@ -294,7 +342,9 @@ Multumesc!`;
       render();
     });
 
-    document.querySelectorAll("#bkRooms input").forEach(x => x.addEventListener("change", buildMessage));
+    // NEW listeners (room counts -> update persons + message)
+    matSel?.addEventListener("change", () => { updateGuestsOptions(); buildMessage(); });
+    twinSel?.addEventListener("change", () => { updateGuestsOptions(); buildMessage(); });
     guestsSel?.addEventListener("change", buildMessage);
 
     copyBtn?.addEventListener("click", async () => {
@@ -307,6 +357,7 @@ Multumesc!`;
     });
 
     // initial
+    updateGuestsOptions();
     buildMessage();
 
     // close calendar if click outside
