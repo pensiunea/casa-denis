@@ -164,11 +164,21 @@ a{color:inherit;text-decoration:none}
 .strip-item:hover{background:rgba(255,255,255,.08)}
 
 .gallery{padding:16px}
-.slider{position:relative}
+.slider{position:relative; overflow:hidden;}
+.slider-btn{z-index:20;}
+.slider-btn.next{right:10px;}
+.slider-btn.prev{left:10px;}
 .slider-track{
-  display:flex;gap:12px;overflow:hidden;scroll-behavior:smooth;
+  display:flex;
+  gap:0;                
+  overflow:hidden;
+  scroll-behavior:smooth;
 }
-.slide{margin:0;min-width:100%}
+.slide{
+  margin:0;
+  flex: 0 0 100%;
+  width:100%;
+}
 .slide img{
   width:100%;height:520px;object-fit:cover;border-radius:18px;border:1px solid rgba(255,255,255,.10);
 }
