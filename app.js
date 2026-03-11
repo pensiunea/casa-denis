@@ -107,4 +107,214 @@
       btn.textContent = isOpen ? "Citeste mai putin" : "Citeste mai mult";
     });
   });
+    // booking widget (date range + WhatsApp message)
+  (function initBooking(){
+    const cal = document.getElementById("bkCal");
+    const calTitle = document.getElementById("calTitle");
+    const calGrid = document.getElementById("calGrid");
+    const calHint = document.getElementById("calHint");
+
+    const inBtn = document.querySelector('[data-open="in"]');
+    const outBtn = document.querySelector('[data-open="out"]');
+    const inText = document.getElementById("bkInText");
+    const outText = document.getElementById("bkOutText");
+
+    const roomSel = document.getElementById("bkRoom");
+    const guestsSel = document.getElementById("bkGuests");
+
+    const waBtn = document.getElementById("bkWhatsApp");
+    const copyBtn = document.getElementById("bkCopy");
+    const preview = document.getElementById("bkMsgPreview");
+
+    const prevBtn = document.querySelector("[data-cal-prev]");
+    const nextBtn = document.querySelector("[data-cal-next]");
+
+    if (!cal || !calGrid || !inBtn || !outBtn || !waBtn || !preview) return;
+
+    // Extract WhatsApp number from existing placeholders if present in DOM
+    // We expect your page already has https://wa.me/[WHATSAPP] in other places.
+    // Fallback: you can hardcode here: const WHATSAPP = "4073....";
+    let WHATSAPP = "";
+    const anyWaLink = document.querySelector('a[href^="https://wa.me/"]');
+    if (anyWaLink) {
+      const m = anyWaLink.getAttribute("href").match(/^https:\/\/wa\.me\/(\d+)/);
+      if (m) WHATSAPP = m[1];
+    }
+
+    const pad2 = (n) => String(n).padStart(2,"0");
+    const fmt = (d) => `${pad2(d.getDate())}.${pad2(d.getMonth()+1)}.${d.getFullYear()}`;
+
+    const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const daysInMonth = (y, m) => new Date(y, m+1, 0).getDate(); // m 0-11
+    const weekdayMon0 = (d) => (d.getDay() + 6) % 7; // Mon=0..Sun=6
+
+    let openMode = "in"; // "in" or "out"
+    let checkIn = null;
+    let checkOut = null;
+
+    const today = startOfDay(new Date());
+    let viewY = today.getFullYear();
+    let viewM = today.getMonth();
+
+    const buildMessage = () => {
+      const room = roomSel?.value || "—";
+      const guests = guestsSel?.value || "—";
+      const inStr = checkIn ? fmt(checkIn) : "—";
+      const outStr = checkOut ? fmt(checkOut) : "—";
+
+      const msg =
+`Salut! As dori o rezervare la Casa Denis.
+Perioada: ${inStr} - ${outStr}
+Tip camera: ${room}
+Persoane: ${guests}
+Multumesc!`;
+
+      preview.textContent = msg;
+
+      const encoded = encodeURIComponent(msg);
+      if (WHATSAPP) {
+        waBtn.href = `https://wa.me/${WHATSAPP}?text=${encoded}`;
+      } else {
+        waBtn.href = "#";
+      }
+      waBtn.classList.toggle("disabled", !checkIn || !checkOut || !WHATSAPP);
+    };
+
+    const render = () => {
+      cal.hidden = false;
+
+      const monthName = new Intl.DateTimeFormat("ro-RO", { month: "long", year:"numeric" })
+        .format(new Date(viewY, viewM, 1));
+      calTitle.textContent = monthName.charAt(0).toUpperCase() + monthName.slice(1);
+
+      calGrid.innerHTML = "";
+
+      const first = new Date(viewY, viewM, 1);
+      const offset = weekdayMon0(first); // 0..6
+      const dim = daysInMonth(viewY, viewM);
+
+      // leading blanks
+      for (let i=0; i<offset; i++){
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "day muted";
+        b.disabled = true;
+        b.textContent = "";
+        calGrid.appendChild(b);
+      }
+
+      for (let day=1; day<=dim; day++){
+        const d = startOfDay(new Date(viewY, viewM, day));
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "day";
+        btn.textContent = String(day);
+
+        // disable past dates for check-in selection (you can remove this if you want)
+        if (d < today && openMode === "in") {
+          btn.classList.add("muted");
+          btn.disabled = true;
+        }
+
+        const isSelectedIn = checkIn && d.getTime() === checkIn.getTime();
+        const isSelectedOut = checkOut && d.getTime() === checkOut.getTime();
+
+        if (isSelectedIn || isSelectedOut) btn.classList.add("selected");
+
+        if (checkIn && checkOut) {
+          const t = d.getTime();
+          if (t > checkIn.getTime() && t < checkOut.getTime()) btn.classList.add("inrange");
+        }
+
+        btn.addEventListener("click", () => {
+          if (openMode === "in") {
+            checkIn = d;
+            checkOut = null;
+            inText.textContent = fmt(checkIn);
+            outText.textContent = "Alege data";
+            outBtn.disabled = false;
+            openMode = "out";
+            calHint.textContent = "Selecteaza data de check-out.";
+            render();
+            buildMessage();
+            return;
+          }
+
+          // out mode
+          if (!checkIn) return;
+
+          if (d <= checkIn) {
+            // if user selects same/earlier, treat as new check-in
+            checkIn = d;
+            checkOut = null;
+            inText.textContent = fmt(checkIn);
+            outText.textContent = "Alege data";
+            calHint.textContent = "Selecteaza data de check-out.";
+            render();
+            buildMessage();
+            return;
+          }
+
+          checkOut = d;
+          outText.textContent = fmt(checkOut);
+          calHint.textContent = "Perioada selectata. Poti trimite pe WhatsApp.";
+          render();
+          buildMessage();
+
+          // auto-hide calendar after selecting checkout (optional)
+          cal.hidden = true;
+        });
+
+        calGrid.appendChild(btn);
+      }
+    };
+
+    const openCalendar = (mode) => {
+      openMode = mode;
+      calHint.textContent = mode === "in"
+        ? "Selecteaza data de check-in."
+        : "Selecteaza data de check-out.";
+      cal.hidden = false;
+      render();
+    };
+
+    inBtn.addEventListener("click", () => openCalendar("in"));
+    outBtn.addEventListener("click", () => openCalendar("out"));
+
+    prevBtn?.addEventListener("click", () => {
+      viewM -= 1;
+      if (viewM < 0) { viewM = 11; viewY -= 1; }
+      render();
+    });
+
+    nextBtn?.addEventListener("click", () => {
+      viewM += 1;
+      if (viewM > 11) { viewM = 0; viewY += 1; }
+      render();
+    });
+
+    roomSel?.addEventListener("change", buildMessage);
+    guestsSel?.addEventListener("change", buildMessage);
+
+    copyBtn?.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(preview.textContent.trim());
+        const old = copyBtn.textContent;
+        copyBtn.textContent = "Copiat";
+        setTimeout(() => copyBtn.textContent = old, 1200);
+      }catch{}
+    });
+
+    // initial
+    buildMessage();
+
+    // close calendar if click outside
+    document.addEventListener("click", (e) => {
+      const t = e.target;
+      if (!cal.hidden) {
+        const inside = cal.contains(t) || inBtn.contains(t) || outBtn.contains(t);
+        if (!inside) cal.hidden = true;
+      }
+    });
+  })();
 })();
