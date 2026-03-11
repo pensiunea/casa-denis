@@ -391,3 +391,10 @@ a{color:inherit;text-decoration:none}
 @media (max-width: 900px){
   .slider-btn{display:none}
 }
+.brand-logo{
+  width:34px;
+  height:34px;
+  border-radius:12px;   /* scoate dacă vrei logo fără colțuri rotunjite */
+  object-fit:contain;
+  display:block;
+}
