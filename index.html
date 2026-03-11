@@ -3,108 +3,261 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Casa Denis</title>
-  <meta name="description" content="Casa Denis – cazare în [Cristian/Brasov]. Camere curate, parcare, Wi-Fi. Rezervări telefon / WhatsApp." />
-  <link rel="stylesheet" href="style.css" />
+  <title>Casa Denis | Cazare în [LOCALITATE]</title>
+  <meta name="description" content="Casa Denis – cazare în [LOCALITATE]. Camere curate, parcare, Wi-Fi. Rezervări telefon / WhatsApp." />
+  <meta name="theme-color" content="#0b1220" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-bg" style="background-image:url('images/hero.jpg');"></div>
-    <div class="hero-content">
-      <div class="badge">Cazare în [Cristian/Brasov]</div>
-      <h1>Casa Denis</h1>
-      <p class="sub">Camere confortabile, parcare, Wi-Fi. Locație liniștită.</p>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="Casa Denis">
+        <span class="brand-mark"></span>
+        <span class="brand-text">Casa Denis</span>
+      </a>
 
-      <div class="price-row">
-        <div class="price">
-          <span class="from">De la</span>
-          <span class="amount">150 lei</span>
-          <span class="per">/ noapte</span>
-        </div>
-        <div class="cta">
-          <a class="btn primary" href="tel:[TELEFON]">Sună</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]?text=Salut!%20Aș%20dori%20o%20rezervare%20la%20Casa%20Denis.%20Aveți%20disponibilitate%20pentru%20[DATA]%3F">WhatsApp</a>
-        </div>
+      <nav class="nav">
+        <a href="#camere">Camere</a>
+        <a href="#facilitati">Facilități</a>
+        <a href="#locatie">Locație</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="topbar-cta">
+        <a class="btn btn-ghost" href="tel:[TELEFON]">Sună</a>
+        <a class="btn btn-primary" target="_blank" rel="noopener"
+           href="https://wa.me/[WHATSAPP]?text=Salut!%20Aș%20dori%20o%20rezervare%20la%20Casa%20Denis.%20Aveți%20disponibilitate%3F">
+          WhatsApp
+        </a>
       </div>
 
-      <div class="mini">
-        Check-in: [ORA] • Check-out: [ORA] • Adresă: [ADRESA SCURTA]
+      <button class="burger" aria-label="Meniu" aria-expanded="false" data-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-nav" data-mobile-nav>
+      <a href="#camere">Camere</a>
+      <a href="#facilitati">Facilități</a>
+      <a href="#locatie">Locație</a>
+      <a href="#contact">Contact</a>
+      <div class="mobile-cta">
+        <a class="btn btn-ghost" href="tel:[TELEFON]">Sună</a>
+        <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">WhatsApp</a>
       </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <main id="top">
+    <section class="hero">
+      <div class="hero-media" style="background-image:url('images/hero.jpg')"></div>
+      <div class="hero-overlay"></div>
 
-    <section class="card">
-      <h2>Camere</h2>
-      <p class="muted">Glisează pozele. Pentru disponibilitate, scrie pe WhatsApp sau sună.</p>
+      <div class="container hero-content">
+        <div class="hero-badge">Cazare în [LOCALITATE]</div>
+        <h1>Casa Denis</h1>
+        <p class="hero-sub">
+          Camere confortabile, atmosferă liniștită, aproape de [REPERE / ATRACȚIE]. Rezervări rapide la telefon sau pe WhatsApp.
+        </p>
 
-      <div class="carousel" aria-label="Galerie camere">
-        <div class="track">
-          <img src="images/camera1.jpg" alt="Cameră – vedere 1" loading="lazy">
-          <img src="images/camera2.jpg" alt="Cameră – vedere 2" loading="lazy">
-          <img src="images/camera3.jpg" alt="Baie" loading="lazy">
-          <img src="images/camera4.jpg" alt="Hol / spații comune" loading="lazy">
-          <img src="images/camera5.jpg" alt="Curte / exterior" loading="lazy">
+        <div class="hero-cards">
+          <div class="card glass">
+            <div class="price-line">
+              <span class="price-from">De la</span>
+              <span class="price-amount">[PRET] lei</span>
+              <span class="price-per">/ noapte</span>
+            </div>
+            <div class="meta">
+              <div><span>Check-in:</span> [ORA]</div>
+              <div><span>Check-out:</span> [ORA]</div>
+              <div><span>Adresă:</span> [ADRESA SCURTA]</div>
+            </div>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="tel:[TELEFON]">Sună pentru rezervare</a>
+              <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">Scrie pe WhatsApp</a>
+            </div>
+          </div>
+
+          <div class="card glass highlights">
+            <div class="hl">
+              <div class="icon">🅿️</div>
+              <div>
+                <div class="hl-title">Parcare</div>
+                <div class="hl-sub">[gratuită / disponibilă]</div>
+              </div>
+            </div>
+            <div class="hl">
+              <div class="icon">📶</div>
+              <div>
+                <div class="hl-title">Wi-Fi</div>
+                <div class="hl-sub">în camere și spații comune</div>
+              </div>
+            </div>
+            <div class="hl">
+              <div class="icon">☕</div>
+              <div>
+                <div class="hl-title">Mic dejun</div>
+                <div class="hl-sub">[da / la cerere / nu]</div>
+              </div>
+            </div>
+            <div class="hl">
+              <div class="icon">🐾</div>
+              <div>
+                <div class="hl-title">Pet friendly</div>
+                <div class="hl-sub">[da / nu]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-strip">
+          <a class="strip-item" href="#camere">Vezi camerele</a>
+          <a class="strip-item" href="#locatie">Vezi locația</a>
+          <a class="strip-item" href="#contact">Contact rapid</a>
         </div>
       </div>
-
-      <div class="hint">Tip: pe telefon glisează stânga/dreapta.</div>
     </section>
 
-    <section class="grid">
-      <section class="card">
-        <h2>Facilități</h2>
-        <ul class="list">
-          <li>Parcare</li>
-          <li>Wi-Fi</li>
-          <li>[Mic dejun / bucătărie / grătar]</li>
-          <li>[Pet friendly / aer condiționat]</li>
-          <li>[Curte / terasă]</li>
-        </ul>
-      </section>
-
-      <section class="card">
-        <h2>Contact</h2>
-        <div class="contact">
-          <div><span class="label">Telefon:</span> <a href="tel:[TELEFON]">[TELEFON_AFIS]</a></div>
-          <div><span class="label">WhatsApp:</span> <a target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">[WHATSAPP_AFIS]</a></div>
-          <div><span class="label">Adresă:</span> [ADRESA]</div>
+    <section id="camere" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Camere</h2>
+          <p>Galerie foto. Pentru disponibilitate, sună sau scrie pe WhatsApp.</p>
         </div>
-        <div class="cta cta-bottom">
-          <a class="btn primary" href="tel:[TELEFON]">Sună acum</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">Scrie pe WhatsApp</a>
+
+        <div class="gallery card">
+          <div class="slider" data-slider>
+            <button class="slider-btn prev" aria-label="Înapoi" data-prev>‹</button>
+            <div class="slider-track" data-track>
+              <figure class="slide"><img src="images/room-1.jpg" alt="Cameră 1" loading="lazy"></figure>
+              <figure class="slide"><img src="images/room-2.jpg" alt="Cameră 2" loading="lazy"></figure>
+              <figure class="slide"><img src="images/room-3.jpg" alt="Cameră 3" loading="lazy"></figure>
+              <figure class="slide"><img src="images/room-4.jpg" alt="Cameră 4" loading="lazy"></figure>
+              <figure class="slide"><img src="images/room-5.jpg" alt="Baie" loading="lazy"></figure>
+              <figure class="slide"><img src="images/room-6.jpg" alt="Exterior / curte" loading="lazy"></figure>
+            </div>
+            <button class="slider-btn next" aria-label="Înainte" data-next>›</button>
+          </div>
+
+          <div class="dots" data-dots aria-label="Indicator galerie"></div>
         </div>
-      </section>
-    </section>
 
-    <section class="card">
-      <h2>Locație</h2>
-      <p class="muted">Deschide în Google Maps pentru navigație.</p>
-
-      <div class="map">
-        <iframe
-          title="Harta Casa Denis"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=[LAT],[LNG]&hl=ro&z=16&output=embed">
-        </iframe>
-      </div>
-
-      <div class="cta cta-bottom">
-        <a class="btn" target="_blank" rel="noopener"
-           href="https://www.google.com/maps?q=[LAT],[LNG]">Deschide în Maps</a>
+        <div class="section-cta">
+          <a class="btn btn-primary" href="tel:[TELEFON]">Sună acum</a>
+          <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">WhatsApp</a>
+        </div>
       </div>
     </section>
 
-    <footer class="footer">
-      <div>© <span id="y"></span> Casa Denis</div>
-    </footer>
+    <section id="facilitati" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Facilități</h2>
+          <p>Detalii pe care oaspeții le caută înainte de rezervare.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card feature">
+            <h3>Confort</h3>
+            <ul>
+              <li>[pat matrimonial / twin]</li>
+              <li>[încălzire / AC]</li>
+              <li>[TV]</li>
+            </ul>
+          </div>
+          <div class="card feature">
+            <h3>Acces și parcare</h3>
+            <ul>
+              <li>Parcare [gratuită]</li>
+              <li>[intrare ușoară]</li>
+              <li>[curte / terasă]</li>
+            </ul>
+          </div>
+          <div class="card feature">
+            <h3>Reguli</h3>
+            <ul>
+              <li>Check-in: [ORA]</li>
+              <li>Check-out: [ORA]</li>
+              <li>[politică anulare scurt]</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="locatie" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Locație</h2>
+          <p>Deschide în Google Maps pentru navigație.</p>
+        </div>
+
+        <div class="card map">
+          <iframe
+            title="Harta Casa Denis"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=[LAT],[LNG]&hl=ro&z=16&output=embed"></iframe>
+        </div>
+
+        <div class="section-cta">
+          <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://www.google.com/maps?q=[LAT],[LNG]">Deschide în Maps</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contact</h2>
+          <p>Rezervări rapide, fără formulare complicate.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card contact">
+            <div class="row"><span>Telefon</span><a href="tel:[TELEFON]">[TELEFON_AFIS]</a></div>
+            <div class="row"><span>WhatsApp</span><a target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">[WHATSAPP_AFIS]</a></div>
+            <div class="row"><span>Adresă</span><div>[ADRESA]</div></div>
+            <div class="row"><span>Email</span><div>[EMAIL] (opțional)</div></div>
+
+            <div class="section-cta left">
+              <a class="btn btn-primary" href="tel:[TELEFON]">Sună</a>
+              <a class="btn btn-ghost" target="_blank" rel="noopener" href="https://wa.me/[WHATSAPP]">WhatsApp</a>
+            </div>
+          </div>
+
+          <div class="card note">
+            <h3>Mesaj rapid (copy/paste)</h3>
+            <p class="muted">Trimite pe WhatsApp și scurtezi discuția.</p>
+            <div class="copybox">
+              <code id="msg">
+Salut! Aș dori o rezervare la Casa Denis.
+Perioadă: [data]
+Număr persoane: [x]
+Preferințe: [pat / mic dejun]
+Mulțumesc!
+              </code>
+              <button class="btn btn-ghost small" data-copy="#msg">Copiază</button>
+            </div>
+
+            <div class="fineprint">
+              Dacă ai și profilul Google Business, pune link-ul site-ului acolo. Crește încrederea și ajută la conversie.
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer">
+          <div>© <span id="y"></span> Casa Denis</div>
+        </footer>
+      </div>
+    </section>
   </main>
 
-  <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
-
