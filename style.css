@@ -449,3 +449,9 @@ a{color:inherit;text-decoration:none}
     height:46px;
   }
 }
+@media (max-width: 900px){
+  .hero::before{
+    background-size: cover;
+    background-position: center;
+  }
+}
