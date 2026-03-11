@@ -157,7 +157,8 @@
     let viewM = today.getMonth();
 
     const buildMessage = () => {
-      const room = roomSel?.value || "—";
+      const picked = Array.from(document.querySelectorAll("#bkRooms input:checked")).map(x => x.value);
+      const room = picked.length ? picked.join(", ") : "—";
       const guests = guestsSel?.value || "—";
       const inStr = checkIn ? fmt(checkIn) : "—";
       const outStr = checkOut ? fmt(checkOut) : "—";
@@ -293,7 +294,7 @@ Multumesc!`;
       render();
     });
 
-    roomSel?.addEventListener("change", buildMessage);
+    document.querySelectorAll("#bkRooms input").forEach(x => x.addEventListener("change", buildMessage));
     guestsSel?.addEventListener("change", buildMessage);
 
     copyBtn?.addEventListener("click", async () => {
