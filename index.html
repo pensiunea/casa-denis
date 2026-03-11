@@ -256,19 +256,28 @@
     <div class="booking-grid">
       <div class="field">
         <label>Camere</label>
-<div class="checks" id="bkRooms">
-  <label class="chk">
-    <input type="checkbox" value="1 x Camera matrimoniala, baie proprie (din 3)" checked>
-    <span>1 x Camera matrimoniala, baie proprie (din 3)</span>
-  </label>
+<div class="booking-grid">
+  <div class="field">
+    <label for="bkMat">Camere matrimoniale (baie proprie)</label>
+    <select id="bkMat">
+      <option value="0">0</option>
+      <option value="1" selected>1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
 
-  <label class="chk">
-    <input type="checkbox" value="1 x Camera twin (2 paturi), baie la comun (din 2)">
-    <span>1 x Camera twin (2 paturi), baie la comun (din 2)</span>
-  </label>
+  <div class="field">
+    <label for="bkTwin">Camere twin (2 paturi, baie la comun)</label>
+    <select id="bkTwin">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+    </select>
+  </div>
 </div>
-<div class="hint2">Poti bifa una sau mai multe camere.</div>
-      </div>
+
+<div class="hint2">Baia la comun este impartita intre camerele twin.</div>
 
       <div class="field">
         <label for="bkGuests">Persoane</label>
