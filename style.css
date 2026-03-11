@@ -412,16 +412,19 @@ a{color:inherit;text-decoration:none}
 @media (max-width: 900px){
   .slider-btn{display:none}
 }
-.brand-logo{
-  width:160px;
-  height:160px;
-  border-radius:12px;   /* scoate dacă vrei logo fără colțuri rotunjite */
-  object-fit:contain;
-  display:block;
-}
 .topbar-inner{
   align-items:center;
-  min-height:72px;      /* dă spațiu logo-ului */
+  min-height:120px;   /* loc pentru logo mare */
+}
+
+.brand-logo{
+  width:160px !important;
+  height:160px !important;
+  object-fit:contain;
+  max-width:none;
+  max-height:none;
+  display:block;
+  border-radius:0;
 }
 
 .brand-logo{
