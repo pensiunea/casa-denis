@@ -65,7 +65,28 @@ a{color:inherit;text-decoration:none}
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 .topbar-inner{display:flex;align-items:center;gap:16px;padding:12px 0}
-.brand{display:flex;align-items:center;gap:10px}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-logo{
+  width:52px;
+  height:52px;
+  object-fit:contain;
+  display:block;
+  border-radius:0; /* pune 12px dacă vrei colțuri rotunjite */
+  filter: drop-shadow(0 6px 18px rgba(0,0,0,.35));
+}
+
+/* pe desktop mare, îl facem și mai vizibil */
+@media (min-width: 920px){
+  .brand-logo{
+    width:64px;
+    height:64px;
+  }
+}
 .brand-mark{
   width:34px;height:34px;border-radius:12px;
   background:linear-gradient(135deg, rgba(255,255,255,.95), rgba(255,255,255,.65));
