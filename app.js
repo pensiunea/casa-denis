@@ -73,7 +73,6 @@
     prev?.addEventListener("click", () => step(-1));
     next?.addEventListener("click", () => step(1));
 
-    // swipe-friendly: update dot on scroll end-ish
     let t = null;
     track.addEventListener("scroll", () => {
       clearTimeout(t);
@@ -87,11 +86,9 @@
       }, 80);
     });
 
-    // init
     makeDots();
     goTo(0);
 
-    // keyboard
     slider.addEventListener("keydown", (e) => {
       if (e.key === "ArrowLeft") step(-1);
       if (e.key === "ArrowRight") step(1);
