@@ -419,3 +419,14 @@ a{color:inherit;text-decoration:none}
   object-fit:contain;
   display:block;
 }
+.topbar-inner{
+  align-items:center;
+  min-height:72px;      /* dă spațiu logo-ului */
+}
+
+.brand-logo{
+  width:64px !important;
+  height:64px !important;
+  max-width:none;
+  max-height:none;
+}
